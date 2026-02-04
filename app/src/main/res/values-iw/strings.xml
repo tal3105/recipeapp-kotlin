@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">אפליקציית מתכונים</string>
+
+    <string name="add_recipe">הוספת מתכון חדש</string>
+    <string name="delete_title">מחיקת מתכון</string>
+    <string name="delete_confirm_msg">האם אתה בטוח שברצונך למחוק את</string>
+    <string name="yes">כן</string>
+    <string name="no">לא</string>
+
+    <string name="recipe_name_hint">שם המתכון</string>
+    <string name="ingredients_hint">מצרכים</string>
+    <string name="instructions_hint">הוראות הכנה</string>
+    <string name="pick_image">בחר תמונה</string>
+    <string name="save_recipe">שמור מתכון</string>
+    <string name="error_empty_title">נא להזין שם למתכון</string>
+
+    <string name="ingredients_label">מצרכים:</string>
+    <string name="instructions_label">הכנה:</string>
+
+    <string name="back">חזור</string>
+
+    <string name="recipe_image_description">תיאור המתכון</string>
+
+    <string name="tvTitle">המתכונים שלי</string>
+
+    <string name="tvFavoriteTitle">המועדפים שלי</string>
+
+    <string name="tvDetailTitle">שם המתכון</string>
+    <string name="tvDetailIngredients">רשימת מצרכים</string>
+    <string name="tvDetailInstructions">הוראות הכנה</string>
+
+    <string name="tvAddRecipeTitle">הוספת מתכון חדש</string>
+    <string name="btnPickImage">שינוי תמונה</string>
+    <string name="btnSaveRecipe">שמור מתכון</string>
+
+    <string name="added_to_favorites">%s נוסף למועדפים!</string>
+    <string name="delete_recipe_title">מחיקת מתכון</string>
+    <string name="delete_recipe_message">האם אתה בטוח שברצונך למחוק את \'%s\'?</string>
+    <string name="yes_delete">כן, מחק</string>
+    <string name="cancel">ביטול</string>
+    <string name="recipe_deleted">המתכון נמחק</string>
+
+    <string name="removed_from_favorites">%s הוסר מהמועדפים</string>
+    <string name="tvEmptyFavorites">אין עדיין מועדפים</string>
+
+    <string name="remove_favorite_title">הסרה מהמועדפים</string>
+    <string name="remove_favorite_confirm_message">האם אתה בטוח שברצונך להסיר את \'%s\' מהמועדפים?</string>
+    <string name="yes_remove">כן, הסר</string>
+
+    <string name="edit_recipe_title">עריכת מתכון</string>
+
+    <string name="recipe_updated">המתכון עודכן בהצלחה!</string>
+    <string name="recipe_saved">המתכון נשמר בהצלחה!</string>
+    <string name="fill_all_fields">נא למלא את כל השדות</string>
+
+    <string name="tvEmptyState">אין מתכונים עדיין לחץ + כדי להוסיף</string>
+    <string name="viewIngredient">לצפייה במצרכים לחץ על המתכון</string>
+
+
+    <string name="login_welcome">ברוכים הבאים</string>
+    <string name="login_email_hint">אימייל</string>
+    <string name="login_password_hint">סיסמה</string>
+    <string name="login_button">התחברות</string>
+    <string name="error_empty_fields">נא למלא את כל השדות</string>
+    <string name="login_success">התחברת בהצלחה!</string>
+    <string name="login_go_to_register">עדיין אין לך חשבון? להרשמה לחץ כאן</string>
+
+    <string name="register_title">יצירת חשבון</string>
+    <string name="register_name_hint">שם מלא</string>
+    <string name="register_confirm_password_hint">אימות סיסמה</string>
+    <string name="register_button">הרשמה</string>
+    <string name="register_back_to_login">כבר יש לך חשבון? להתחברות</string>
+    <string name="error_password_mismatch">הסיסמאות אינן תואמות</string>
+
+
+</resources>

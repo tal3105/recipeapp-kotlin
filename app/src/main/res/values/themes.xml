@@ -1,0 +1,9 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Tal_Mitzmacher_Amit_Mitzmacher_Yuval_Tal" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.Tal_Mitzmacher_Amit_Mitzmacher_Yuval_Tal" parent="Base.Theme.Tal_Mitzmacher_Amit_Mitzmacher_Yuval_Tal" />
+</resources>

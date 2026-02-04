@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "714222010891",
+    "project_id": "recipe-4193c",
+    "storage_bucket": "recipe-4193c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:714222010891:android:e5ac78b77063379e0dbd0e",
+        "android_client_info": {
+          "package_name": "com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCF0tTQHJNB67CzFh3spA6W5XIQLYTueo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

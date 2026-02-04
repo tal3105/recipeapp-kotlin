@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Recipes</string>
+
+    <string name="add_recipe">Add New Recipe</string>
+    <string name="delete_title">Delete Recipe</string>
+    <string name="delete_confirm_msg">Are you sure you want to delete</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <string name="recipe_name_hint">Recipe Name</string>
+    <string name="ingredients_hint">Ingredients</string>
+    <string name="instructions_hint">Instructions</string>
+    <string name="pick_image">Pick Image</string>
+    <string name="save_recipe">Save Recipe</string>
+    <string name="error_empty_title">Please enter a title</string>
+
+    <string name="ingredients_label">Ingredients:</string>
+    <string name="instructions_label">Preparation:</string>
+
+    <string name="back">Back</string>
+
+    <string name="recipe_image_description">Recipe Desc</string>
+
+    <string name="tvTitle">My Recipes</string>
+
+    <string name="tvFavoriteTitle">My Favorite</string>
+
+    <string name="tvDetailTitle">Recipe Name</string>
+    <string name="tvDetailIngredients">Ingredients List</string>
+    <string name="tvDetailInstructions">Instructions</string>
+
+    <string name="tvAddRecipeTitle">Add New Recipe</string>
+    <string name="btnPickImage">Change Image</string>
+    <string name="btnSaveRecipe">Save Recipe</string>
+
+    <string name="added_to_favorites">%s added to favorites!</string>
+    <string name="delete_recipe_title">Delete Recipe</string>
+    <string name="delete_recipe_message">Are you sure you want to delete \'%s\'?</string>
+    <string name="yes_delete">Yes, Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="recipe_deleted">Recipe deleted</string>
+
+    <string name="removed_from_favorites">%s removed from favorites</string>
+    <string name="tvEmptyFavorites">No favorites yet</string>
+
+    <string name="remove_favorite_title">Remove from Favorites</string>
+    <string name="remove_favorite_confirm_message">Are you sure you want to remove \'%s\' from favorites?</string>
+    <string name="yes_remove">Yes, Remove</string>
+
+    <string name="edit_recipe_title">Edit Recipe</string>
+
+    <string name="recipe_updated">Recipe updated successfully!</string>
+    <string name="recipe_saved">Recipe saved successfully!</string>
+    <string name="fill_all_fields">Please fill all fields</string>
+
+    <string name="tvEmptyState">No Recipe Yet Tap + To Add</string>
+    <string name="viewIngredient">To View the Ingredients Tap On The Recipe</string>
+
+    <string name="login_welcome">Welcome</string>
+    <string name="login_email_hint">Email</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_button">Login</string>
+    <string name="error_empty_fields">Please fill all fields</string>
+    <string name="login_success">Logged in successfully!</string>
+    <string name="login_go_to_register">Don\'t have an account? Register here</string>
+
+    <string name="register_title">Create Account</string>
+    <string name="register_name_hint">Full Name</string>
+    <string name="register_confirm_password_hint">Confirm Password</string>
+    <string name="register_button">Register</string>
+    <string name="register_back_to_login">Already have an account? Login</string>
+    <string name="error_password_mismatch">Passwords do not match</string>
+
+</resources>
