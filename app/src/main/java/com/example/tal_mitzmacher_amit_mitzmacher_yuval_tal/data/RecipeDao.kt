@@ -19,6 +19,8 @@ interface RecipeDao {
     @Query("SELECT * FROM recipes_table WHERE id = :id AND userId = :userId")
     fun getRecipeById(id: Int, userId: String): LiveData<Recipe>
 
+
+
     // מביא רק את המועדפים של המשתמש המחובר
     @Query("SELECT * FROM recipes_table WHERE isFavorite = 1 AND userId = :userId")
     fun getFavoriteRecipes(userId: String): LiveData<List<Recipe>>

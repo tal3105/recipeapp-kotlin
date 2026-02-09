@@ -11,7 +11,7 @@ data class Recipe (
             val instructions: String,
             val imgUri: String?,
             val isFavorite: Boolean = false,
-            val userId: String // השדה החדש שישמור את ה-UID של המשתמש מ-Firebase
-
+            val userId: String,
+            val isFromApi: Boolean = false
 
     )

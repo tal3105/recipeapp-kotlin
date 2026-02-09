@@ -53,6 +53,7 @@
 
     <string name="recipe_updated">המתכון עודכן בהצלחה!</string>
     <string name="recipe_saved">המתכון נשמר בהצלחה!</string>
+    <string name="RecipeExist">המתכון כבר קיים במועדפים!</string>
     <string name="fill_all_fields">נא למלא את כל השדות</string>
 
     <string name="tvEmptyState">אין מתכונים עדיין לחץ + כדי להוסיף</string>
@@ -76,6 +77,7 @@
 
     <string name="searchView">חפש מתכון לפי מרכיבים</string>
     <string name="tvTitleSearch">חיפוש</string>
+
 
 
 

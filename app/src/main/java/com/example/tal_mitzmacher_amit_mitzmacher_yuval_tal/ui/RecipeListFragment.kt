@@ -80,24 +80,27 @@ class RecipeListFragment : Fragment() {
                 if (position != RecyclerView.NO_POSITION) {
                     val recipe = adapter.currentList[position]
                     viewModel.updateFavoriteStatus(recipe.id, true)
-                    Toast.makeText(context, getString(R.string.added_to_favorites, recipe.title), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, getString(R.string.added_to_favorites), Toast.LENGTH_SHORT).show()
                 }
                 adapter.notifyItemChanged(position) // מחזיר את הפריט למקומו באנימציה
             }
         }
         ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(binding.recyclerView)
 
-        // 6. תצפית (Observation) על רשימת המתכונים מה-ViewModel
+        // 6. תצפית (Observation) על רשימת המתכונים - החלק ששונה!
         viewModel.getAllRecipes().observe(viewLifecycleOwner) { recipes ->
-            adapter.submitList(recipes)
+            // קריאה לפונקציית התרגום ב-ViewModel לפני שמעבירים לאדפטר
+            viewModel.translateRecipeList(recipes) { translatedRecipes ->
+                adapter.submitList(translatedRecipes)
 
-            // ניהול מצב רשימה ריקה (Empty State)
-            if (recipes.isNullOrEmpty()) {
-                binding.tvEmptyState.visibility = View.VISIBLE
-                binding.recyclerView.visibility = View.GONE
-            } else {
-                binding.tvEmptyState.visibility = View.GONE
-                binding.recyclerView.visibility = View.VISIBLE
+                // ניהול מצב רשימה ריקה (Empty State)
+                if (translatedRecipes.isNullOrEmpty()) {
+                    binding.tvEmptyState.visibility = View.VISIBLE
+                    binding.recyclerView.visibility = View.GONE
+                } else {
+                    binding.tvEmptyState.visibility = View.GONE
+                    binding.recyclerView.visibility = View.VISIBLE
+                }
             }
         }
     }
@@ -105,7 +108,7 @@ class RecipeListFragment : Fragment() {
     private fun showDeleteConfirmation(recipe: Recipe) {
         android.app.AlertDialog.Builder(requireContext())
             .setTitle(getString(R.string.delete_recipe_title))
-            .setMessage(getString(R.string.delete_recipe_message, recipe.title))
+            .setMessage(getString(R.string.delete_recipe_message))
             .setPositiveButton(getString(R.string.yes_delete)) { _, _ ->
                 viewModel.delete(recipe)
                 Toast.makeText(requireContext(), getString(R.string.recipe_deleted), Toast.LENGTH_SHORT).show()

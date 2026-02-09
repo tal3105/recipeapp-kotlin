@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.R
+import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.data.Recipe
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.databinding.FragmentRecipeDetailBinding
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.viewmodel.RecipeViewModel
 
@@ -17,7 +18,7 @@ class RecipeDetailFragment : Fragment() {
     private var _binding: FragmentRecipeDetailBinding? = null
     private val binding get() = _binding!!
 
-    // שימוש ב-viewModels() לקבלת ה-ViewModel המשותף
+    // שימוש ב-ViewModel הרגיל (בלי Factory מסובך, כי בקובץ שלך ה-ViewModel מקבל רק Application)
     private val viewModel: RecipeViewModel by viewModels()
 
     override fun onCreateView(
@@ -31,48 +32,43 @@ class RecipeDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // שליפת ה-ID של המתכון שנשלח ב-Bundle
+        // קבלת ה-ID (מותאם לקוד שלך שעובד עם Bundle)
         val recipeId = arguments?.getInt("recipeId") ?: -1
 
-        // קריאה למתכון מהדאטהבייס דרך ה-ViewModel (שמזהה אוטומטית את המשתמש המחובר)
-        viewModel.getRecipeById(recipeId).observe(viewLifecycleOwner) { recipe ->
-            recipe?.let { originalRecipe ->
+        if (recipeId != -1) {
+            viewModel.getRecipeById(recipeId).observe(viewLifecycleOwner) { originalRecipe ->
+                originalRecipe?.let { recipe ->
+                    updateUI(recipe) // מציג מיד את מה שיש (כנראה אנגלית)
 
-                // 1. הצגת הנתונים המקוריים (מה ששמור בדאטהבייס)
-                binding.tvDetailTitle.text = originalRecipe.title
-                binding.tvDetailIngredients.text = originalRecipe.ingredients
-                binding.tvDetailInstructions.text = originalRecipe.instructions
-
-                // טעינת תמונה עם Glide
-                if (!originalRecipe.imgUri.isNullOrEmpty()) {
-                    Glide.with(this)
-                        .load(originalRecipe.imgUri)
-                        .placeholder(R.drawable.placeholder_food)
-                        .error(R.drawable.placeholder_food)
-                        .into(binding.ivDetailImage)
-                } else {
-                    binding.ivDetailImage.setImageResource(R.drawable.placeholder_food)
-                }
-
-                // 2. תרגום אוטומטי לעברית (אם המכשיר בעברית)
-                // ה-Callback ירוץ ברגע שהתרגום מה-Agent יסתיים
-                viewModel.translateFullRecipe(originalRecipe) { translatedRecipe ->
-                    // בדיקה חשובה שהפרגמנט עדיין "חי" (נמנע מ-NullPointerException)
-                    if (_binding != null && isAdded) {
-                        binding.tvDetailTitle.text = translatedRecipe.title
-                        binding.tvDetailIngredients.text = translatedRecipe.ingredients
-                        binding.tvDetailInstructions.text = translatedRecipe.instructions
+                    // קריאה לתרגום (בהתאם לשפת המכשיר)
+                    viewModel.translateFullRecipe(recipe) { finalRecipe ->
+                        // בדיקה שהמסך עדיין קיים לפני עדכון
+                        if (_binding != null && isAdded) {
+                            updateUI(finalRecipe)
+                        }
                     }
                 }
             }
         }
 
-        // ניווט למסך עריכה
         binding.btnEditRecipe.setOnClickListener {
-            val bundle = Bundle().apply {
-                putInt("recipeId", recipeId)
-            }
+            val bundle = Bundle().apply { putInt("recipeId", recipeId) }
             findNavController().navigate(R.id.action_recipeDetailFragment_to_addEditRecipeFragment, bundle)
+        }
+    }
+
+    private fun updateUI(recipe: Recipe) {
+        binding.tvDetailTitle.text = recipe.title
+        binding.tvDetailIngredients.text = recipe.ingredients
+        binding.tvDetailInstructions.text = recipe.instructions
+
+        if (!recipe.imgUri.isNullOrEmpty()) {
+            Glide.with(this)
+                .load(recipe.imgUri)
+                .placeholder(R.drawable.placeholder_food)
+                .into(binding.ivDetailImage)
+        } else {
+            binding.ivDetailImage.setImageResource(R.drawable.placeholder_food)
         }
     }
 

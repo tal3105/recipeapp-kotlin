@@ -27,9 +27,14 @@ class AddEditRecipeFragment : Fragment() {
     private var isCurrentlyFavorite: Boolean = false
 
     private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        uri?.let {
-            selectedImageUri = it
-            binding.imageViewSelected.setImageURI(it)
+        uri?.let { tempUri ->
+            // כאן השינוי: אנחנו שומרים את התמונה לקובץ פנימי מיד לאחר הבחירה
+            val savedUri = saveImageToInternalStorage(tempUri)
+
+            savedUri?.let { permanentUri ->
+                selectedImageUri = permanentUri
+                binding.imageViewSelected.setImageURI(permanentUri)
+            }
         }
     }
 
@@ -103,6 +108,27 @@ class AddEditRecipeFragment : Fragment() {
 
         // חזרה למסך הקודם
         findNavController().navigateUp()
+    }
+
+    // פונקציה לשמירת התמונה בתיקייה הפרטית של האפליקציה
+    private fun saveImageToInternalStorage(uri: Uri): Uri? {
+        return try {
+            val inputStream = requireContext().contentResolver.openInputStream(uri)
+            // יצירת שם קובץ ייחודי
+            val fileName = "recipe_img_${System.currentTimeMillis()}.jpg"
+            val file = java.io.File(requireContext().filesDir, fileName)
+            val outputStream = java.io.FileOutputStream(file)
+
+            inputStream?.copyTo(outputStream)
+            inputStream?.close()
+            outputStream.close()
+
+            // מחזיר את הנתיב החדש והקבוע של הקובץ
+            Uri.fromFile(file)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
     }
 
     override fun onDestroyView() {

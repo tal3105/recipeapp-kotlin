@@ -29,6 +29,8 @@ class RecipeRepository(application: Application) {
     suspend fun updateFavoriteStatus(recipeId: Int, isFav: Boolean, userId: String) =
         recipeDao.updateFavoriteStatus(recipeId, isFav, userId)
 
+
+
     // --- חיפוש ב-API - כאן הייתה השגיאה ---
     suspend fun searchApiRecipes(query: String): List<Recipe> {
         return try {

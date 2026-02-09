@@ -52,6 +52,7 @@
 
     <string name="recipe_updated">Recipe updated successfully!</string>
     <string name="recipe_saved">Recipe saved successfully!</string>
+    <string name="RecipeExist">Recipe already Exist</string>
     <string name="fill_all_fields">Please fill all fields</string>
 
     <string name="tvEmptyState">No Recipe Yet Tap + To Add</string>
@@ -74,5 +75,6 @@
 
     <string name="searchView">Search by ingredients</string>
     <string name="tvTitleSearch">Search</string>
+
 
 </resources>
