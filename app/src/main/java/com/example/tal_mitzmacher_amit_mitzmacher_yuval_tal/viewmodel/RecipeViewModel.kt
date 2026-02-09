@@ -55,12 +55,14 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     // --- פונקציית התרגום למסך הפירוט - הפונקציה שהייתה חסרה! ---
+    // --- תרגום מלא למסך הפירוט (מתוקן) ---
     fun translateFullRecipe(recipe: Recipe, onResult: (Recipe) -> Unit) {
         viewModelScope.launch {
             if (isDeviceInHebrew()) {
-                // תרחיש 1: המכשיר בעברית
-                if (!containsHebrew(recipe.title)) {
-                    // אם הכותרת באנגלית -> תרגם לעברית
+                // תיקון: בודקים אם *ההוראות* מכילות עברית, לא הכותרת.
+                // הסיבה: הכותרת לפעמים כבר שמורה בעברית מהחיפוש, אבל ההוראות עדיין באנגלית.
+                if (!containsHebrew(recipe.instructions)) {
+                    // תרגם את הכל לעברית (גם אם הכותרת כבר בעברית, זה לא יזיק)
                     val translatedRecipe = recipe.copy(
                         title = translationAgent.translateToHebrew(recipe.title),
                         instructions = translationAgent.translateToHebrew(recipe.instructions),
@@ -68,13 +70,13 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
                     )
                     onResult(translatedRecipe)
                 } else {
-                    // אם זה כבר בעברית -> אל תיגע
+                    // ההוראות כבר בעברית -> אין צורך לתרגם
                     onResult(recipe)
                 }
             } else {
-                // תרחיש 2: המכשיר באנגלית
+                // המכשיר באנגלית
                 if (containsHebrew(recipe.title)) {
-                    // אם הכותרת בעברית -> תרגם לאנגלית
+                    // תרגם מעברית לאנגלית
                     val translatedRecipe = recipe.copy(
                         title = translationAgent.translateToEnglish(recipe.title),
                         instructions = translationAgent.translateToEnglish(recipe.instructions),
@@ -82,7 +84,6 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
                     )
                     onResult(translatedRecipe)
                 } else {
-                    // אם זה כבר באנגלית -> אל תיגע
                     onResult(recipe)
                 }
             }

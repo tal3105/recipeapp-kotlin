@@ -8,21 +8,20 @@ import kotlinx.coroutines.tasks.await
 
 class TranslationAgent {
 
-    // הגדרת המתרגם מעברית לאנגלית
+    // --- הגדרת המתרגמים (נשאר אותו דבר) ---
     private val hebrewToEnglishOptions = TranslatorOptions.Builder()
         .setSourceLanguage(TranslateLanguage.HEBREW)
         .setTargetLanguage(TranslateLanguage.ENGLISH)
         .build()
     private val hebrewToEnglishTranslator = Translation.getClient(hebrewToEnglishOptions)
 
-    // הגדרת המתרגם מאנגלית לעברית
     private val englishToHebrewOptions = TranslatorOptions.Builder()
         .setSourceLanguage(TranslateLanguage.ENGLISH)
         .setTargetLanguage(TranslateLanguage.HEBREW)
         .build()
     private val englishToHebrewTranslator = Translation.getClient(englishToHebrewOptions)
 
-    // פונקציה שמורידה את המודלים הדרושים (קורית פעם אחת)
+    // --- הורדת מודלים (נשאר אותו דבר) ---
     suspend fun downloadModels() {
         val conditions = DownloadConditions.Builder().requireWifi().build()
         try {
@@ -33,30 +32,56 @@ class TranslationAgent {
         }
     }
 
-    // פונקציה לתרגום טקסט מעברית לאנגלית
-    // (משמשת גם לחיפוש וגם להמרת מתכונים)
+
+    // פונקציה לתרגום טקסט מעברית לאנגלית (שומרת על שורות)
     suspend fun translateToEnglish(text: String): String {
         return try {
             downloadModels()
-            hebrewToEnglishTranslator.translate(text).await()
+            val resultBuilder = StringBuilder()
+            // מפצל את הטקסט לפי ירידות שורה
+            val lines = text.split("\n")
+
+            for (line in lines) {
+                if (line.trim().isEmpty()) {
+                    // אם השורה ריקה, שומר על הרווח
+                    resultBuilder.append("\n")
+                } else {
+                    // מתרגם רק את השורה הנוכחית
+                    val translatedLine = hebrewToEnglishTranslator.translate(line).await()
+                    resultBuilder.append(translatedLine).append("\n")
+                }
+            }
+            // מחזיר את התוצאה ומוחק רווחים מיותרים בסוף
+            return resultBuilder.toString().trimEnd()
         } catch (e: Exception) {
-            text // במקרה של שגיאה מחזיר את המקור
+            text
         }
     }
 
-    // פונקציה לתרגום טקסט מאנגלית לעברית
-    // (משמשת לתרגום מתכונים וכותרות)
+    // פונקציה לתרגום טקסט מאנגלית לעברית (שומרת על שורות - קריטי למצרכים!)
     suspend fun translateToHebrew(text: String): String {
         return try {
             downloadModels()
-            englishToHebrewTranslator.translate(text).await()
+            val resultBuilder = StringBuilder()
+            // מפצל את הטקסט לפי ירידות שורה
+            val lines = text.split("\n")
+
+            for (line in lines) {
+                if (line.trim().isEmpty()) {
+                    // אם השורה ריקה, שומר על הרווח
+                    resultBuilder.append("\n")
+                } else {
+                    // מתרגם רק את השורה הנוכחית
+                    val translatedLine = englishToHebrewTranslator.translate(line).await()
+                    resultBuilder.append(translatedLine).append("\n")
+                }
+            }
+            return resultBuilder.toString().trimEnd()
         } catch (e: Exception) {
             text
         }
     }
 
     // --- תמיכה לאחור ---
-    // השארתי את הפונקציה הזו למקרה שעדיין לא עדכנת את ה-ViewModel,
-    // היא פשוט קוראת לפונקציה החדשה.
     suspend fun translateQuery(text: String) = translateToEnglish(text)
 }
