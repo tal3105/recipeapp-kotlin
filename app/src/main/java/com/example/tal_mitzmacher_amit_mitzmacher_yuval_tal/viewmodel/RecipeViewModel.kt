@@ -11,6 +11,8 @@ import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.data.utils.Translati
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import java.util.Locale
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class RecipeViewModel(application: Application) : AndroidViewModel(application) {
 

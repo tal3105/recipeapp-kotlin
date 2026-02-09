@@ -72,4 +72,7 @@
     <string name="register_back_to_login">Already have an account? Login</string>
     <string name="error_password_mismatch">Passwords do not match</string>
 
+    <string name="searchView">Search by ingredients</string>
+    <string name="tvTitleSearch">Search</string>
+
 </resources>

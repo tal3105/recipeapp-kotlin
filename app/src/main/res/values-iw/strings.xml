@@ -74,5 +74,10 @@
     <string name="register_back_to_login">כבר יש לך חשבון? להתחברות</string>
     <string name="error_password_mismatch">הסיסמאות אינן תואמות</string>
 
+    <string name="searchView">חפש מתכון לפי מרכיבים</string>
+    <string name="tvTitleSearch">חיפוש</string>
+
+
+
 
 </resources>
