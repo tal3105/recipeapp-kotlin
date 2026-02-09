@@ -66,7 +66,7 @@ class RecipeListFragment : Fragment() {
         // 4. כפתור התנתקות (Log Out)
         binding.btnLogout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-            Toast.makeText(requireContext(), "התנתקת בהצלחה", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, getString(R.string.logOut), Toast.LENGTH_SHORT).show()
             // חזרה למסך הלוגין וניקוי ה-Stack כדי שהמשתמש לא יוכל לחזור אחורה
             findNavController().navigate(R.id.action_recipeListFragment_to_logInFragment)
         }

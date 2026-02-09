@@ -22,7 +22,9 @@
             app:destination="@id/searchFragment" />
         <action
             android:id="@+id/action_recipeListFragment_to_logInFragment"
-            app:destination="@id/logInFragment" />
+            app:destination="@id/logInFragment"
+            app:popUpTo="@id/logInFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/addEditRecipeFragment"

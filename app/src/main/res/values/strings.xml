@@ -34,14 +34,14 @@
     <string name="btnPickImage">Change Image</string>
     <string name="btnSaveRecipe">Save Recipe</string>
 
-    <string name="added_to_favorites">%s added to favorites!</string>
+    <string name="added_to_favorites">added to favorites!</string>
     <string name="delete_recipe_title">Delete Recipe</string>
     <string name="delete_recipe_message">Are you sure you want to delete \'%s\'?</string>
     <string name="yes_delete">Yes, Delete</string>
     <string name="cancel">Cancel</string>
     <string name="recipe_deleted">Recipe deleted</string>
 
-    <string name="removed_from_favorites">%s removed from favorites</string>
+    <string name="removed_from_favorites">removed from favorites</string>
     <string name="tvEmptyFavorites">No favorites yet</string>
 
     <string name="remove_favorite_title">Remove from Favorites</string>
@@ -65,6 +65,10 @@
     <string name="error_empty_fields">Please fill all fields</string>
     <string name="login_success">Logged in successfully!</string>
     <string name="login_go_to_register">Don\'t have an account? Register here</string>
+    <string name="FillEmailPass">Fill Email and Password</string>
+    <string name="error">Error</string>
+
+
 
     <string name="register_title">Create Account</string>
     <string name="register_name_hint">Full Name</string>
@@ -73,7 +77,12 @@
     <string name="register_back_to_login">Already have an account? Login</string>
     <string name="error_password_mismatch">Passwords do not match</string>
 
+    <string name="logOut">Logout Succesfully</string>
+    <string name="login">Login Succesfully</string>
+
+
     <string name="searchView">Search by ingredients</string>
+    <string name="added_to_home">added to Home</string>
     <string name="tvTitleSearch">Search</string>
 
 

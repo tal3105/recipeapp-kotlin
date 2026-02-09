@@ -35,14 +35,14 @@
     <string name="btnPickImage">שינוי תמונה</string>
     <string name="btnSaveRecipe">שמור מתכון</string>
 
-    <string name="added_to_favorites">%s נוסף למועדפים!</string>
+    <string name="added_to_favorites"> נוסף למועדפים!</string>
     <string name="delete_recipe_title">מחיקת מתכון</string>
     <string name="delete_recipe_message">האם אתה בטוח שברצונך למחוק את \'%s\'?</string>
     <string name="yes_delete">כן, מחק</string>
     <string name="cancel">ביטול</string>
     <string name="recipe_deleted">המתכון נמחק</string>
 
-    <string name="removed_from_favorites">%s הוסר מהמועדפים</string>
+    <string name="removed_from_favorites"> הוסר מהמועדפים</string>
     <string name="tvEmptyFavorites">אין עדיין מועדפים</string>
 
     <string name="remove_favorite_title">הסרה מהמועדפים</string>
@@ -67,6 +67,9 @@
     <string name="error_empty_fields">נא למלא את כל השדות</string>
     <string name="login_success">התחברת בהצלחה!</string>
     <string name="login_go_to_register">עדיין אין לך חשבון? להרשמה לחץ כאן</string>
+    <string name="FillEmailPass">נא למלא אימייל וסיסמה</string>
+    <string name="error">שגיאה</string>
+
 
     <string name="register_title">יצירת חשבון</string>
     <string name="register_name_hint">שם מלא</string>
@@ -75,7 +78,12 @@
     <string name="register_back_to_login">כבר יש לך חשבון? להתחברות</string>
     <string name="error_password_mismatch">הסיסמאות אינן תואמות</string>
 
+    <string name="logOut">התנתקת בהצלחה</string>
+    <string name="login">התחברת בהצלחה</string>
+
+
     <string name="searchView">חפש מתכון לפי מרכיבים</string>
+    <string name="added_to_home"> נוסף לבית</string>
     <string name="tvTitleSearch">חיפוש</string>
 
 

@@ -38,7 +38,7 @@ class LogInFragment : Fragment() {
                     findNavController().navigate(R.id.action_logInFragment_to_recipeListFragment)
                 }
             } else {
-                Toast.makeText(context, "נא למלא אימייל וסיסמה", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.FillEmailPass), Toast.LENGTH_SHORT).show()
             }
         }
 

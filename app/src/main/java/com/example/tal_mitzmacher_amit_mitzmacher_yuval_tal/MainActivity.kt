@@ -32,10 +32,10 @@ class MainActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "התחברת בהצלחה!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.login), Toast.LENGTH_SHORT).show()
                     onSuccess() // כאן אנחנו מפעילים את הניווט שיוגדר בפרגמנט
                 } else {
-                    Toast.makeText(this, "שגיאה: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show()
                 }
             }
     }

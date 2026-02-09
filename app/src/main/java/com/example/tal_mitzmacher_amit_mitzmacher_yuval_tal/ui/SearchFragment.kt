@@ -9,6 +9,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels // וודאי שיש לך את התלות של fragment-ktx
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.R
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.databinding.FragmentSearchBinding
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.viewmodel.RecipeViewModel
 
@@ -36,7 +37,8 @@ class SearchFragment : Fragment() {
             onItemClick = { recipe ->
                 // בלחיצה על תוצאה מהאינטרנט -> נשמור אותה לדאטהבייס המקומי
                 viewModel.insert(recipe)
-                Toast.makeText(context, "${recipe.title} נשמר למועדפים!", Toast.LENGTH_SHORT).show()
+                val message = context?.getString(R.string.added_to_home, recipe.title)
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
             },
             onItemLongClick = {
                 // אפשר להשאיר ריק או להוסיף פעולה אחרת
