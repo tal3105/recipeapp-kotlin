@@ -86,7 +86,10 @@
     <string name="added_to_home"> נוסף לבית</string>
     <string name="tvTitleSearch">חיפוש</string>
 
-
+    <string name="ExitApp">יציאה מהאפליקציה</string>
+    <string name="ExitAppAlert">אתה בטוח שברצונך לסגור את האפליקציה?</string>
+    <string name="ExitAppCancel">ביטול</string>
+    <string name="ExitAppOut">צא</string>
 
 
 

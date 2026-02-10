@@ -35,6 +35,21 @@ class RecipeListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : androidx.activity.OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                    .setTitle(getString(R.string.ExitApp))
+                    .setMessage(getString(R.string.ExitAppAlert))
+                    .setNegativeButton(getString(R.string.ExitAppCancel)) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .setPositiveButton(getString(R.string.ExitAppOut)) { _, _ ->
+                        requireActivity().finish()
+                    }
+                    .show()
+            }
+        })
+
         // 1. הגדרת האדפטר (Adapter)
         val adapter = RecipeAdapter(
             onItemClick = { recipe ->

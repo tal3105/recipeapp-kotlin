@@ -85,5 +85,10 @@
     <string name="added_to_home">added to Home</string>
     <string name="tvTitleSearch">Search</string>
 
+    <string name="ExitApp">Exit From The App</string>
+    <string name="ExitAppAlert">Are You Sure You Want To Close The App</string>
+    <string name="ExitAppCancel">Cancel</string>
+    <string name="ExitAppOut">Get Out</string>
+
 
 </resources>
