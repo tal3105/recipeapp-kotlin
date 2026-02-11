@@ -42,16 +42,28 @@ class FavoriteFragment : Fragment() {
         binding.rvFavorites.adapter = adapter
         binding.rvFavorites.layoutManager = LinearLayoutManager(requireContext())
 
-        // תיקון: קריאה לפונקציה ()getFavoriteRecipes במקום למשתנה הסטטי
+        // Observe the favorite recipes from the database
         viewModel.getFavoriteRecipes().observe(viewLifecycleOwner) { favorites ->
-            adapter.submitList(favorites)
-
             if (favorites.isNullOrEmpty()) {
+                // Show empty state if there are no favorites
                 binding.tvEmptyFavorites.visibility = View.VISIBLE
                 binding.rvFavorites.visibility = View.GONE
+                adapter.submitList(emptyList())
             } else {
+                // Hide empty state and show RecyclerView
                 binding.tvEmptyFavorites.visibility = View.GONE
                 binding.rvFavorites.visibility = View.VISIBLE
+
+                // Show original list immediately for a snappy UI
+                adapter.submitList(favorites)
+
+                // Translate the list titles automatically based on device language
+                viewModel.translateRecipeList(favorites) { translatedList ->
+                    // Check if fragment is still attached to avoid crashes
+                    if (_binding != null) {
+                        adapter.submitList(translatedList)
+                    }
+                }
             }
         }
     }
@@ -62,7 +74,7 @@ class FavoriteFragment : Fragment() {
         builder.setMessage(getString(R.string.remove_favorite_confirm_message, recipe.title))
 
         builder.setPositiveButton(getString(R.string.yes_remove)) { _, _ ->
-            // תיקון: הפונקציה ב-ViewModel כבר מזריקה את ה-userId אוטומטית
+            // Update favorite status in DB
             viewModel.updateFavoriteStatus(recipe.id, false)
 
             val message = getString(R.string.removed_from_favorites, recipe.title)

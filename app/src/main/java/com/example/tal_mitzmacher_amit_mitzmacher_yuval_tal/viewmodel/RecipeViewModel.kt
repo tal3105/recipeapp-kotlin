@@ -77,38 +77,44 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    // --- תרגום מתכון בודד (למסך הפרטים) ---
+    // --- Translate a single recipe (for Details screen) ---
     fun translateFullRecipe(recipe: Recipe, onResult: (Recipe) -> Unit) {
         viewModelScope.launch {
-            // מדלגים אם זה מתכון אישי
+            // Skip if it is a personal recipe
             if (!recipe.isFromApi) {
                 onResult(recipe)
                 return@launch
             }
 
             val deviceIsHebrew = isDeviceInHebrew()
-            val hasHebrew = containsHebrew(recipe.title)
 
-            if (deviceIsHebrew && !hasHebrew) {
-                // אנגלית -> עברית
-                val tRecipe = recipe.copy(
-                    title = translationAgent.translateToHebrew(recipe.title),
-                    ingredients = translationAgent.translateToHebrew(recipe.ingredients),
-                    instructions = translationAgent.translateToHebrew(recipe.instructions)
-                )
-                onResult(tRecipe)
-            } else if (!deviceIsHebrew && hasHebrew) {
-                // עברית -> אנגלית
-                val tRecipe = recipe.copy(
-                    title = translationAgent.translateToEnglish(recipe.title),
-                    ingredients = translationAgent.translateToEnglish(recipe.ingredients),
-                    instructions = translationAgent.translateToEnglish(recipe.instructions)
-                )
-                onResult(tRecipe)
+            // Check each field independently to avoid partial translation
+            val titleHasHebrew = containsHebrew(recipe.title)
+            val instructionsHaveHebrew = containsHebrew(recipe.instructions)
+            val ingredientsHaveHebrew = containsHebrew(recipe.ingredients)
+
+            var tTitle = recipe.title
+            var tInstructions = recipe.instructions
+            var tIngredients = recipe.ingredients
+
+            if (deviceIsHebrew) {
+                // Device is Hebrew -> translate to Hebrew what is missing
+                if (!titleHasHebrew) tTitle = translationAgent.translateToHebrew(recipe.title)
+                if (!instructionsHaveHebrew) tInstructions = translationAgent.translateToHebrew(recipe.instructions)
+                if (!ingredientsHaveHebrew) tIngredients = translationAgent.translateToHebrew(recipe.ingredients)
             } else {
-                // השאר כמו שהוא
-                onResult(recipe)
+                // Device is English -> translate to English what is in Hebrew
+                if (titleHasHebrew) tTitle = translationAgent.translateToEnglish(recipe.title)
+                if (instructionsHaveHebrew) tInstructions = translationAgent.translateToEnglish(recipe.instructions)
+                if (ingredientsHaveHebrew) tIngredients = translationAgent.translateToEnglish(recipe.ingredients)
             }
+
+            val finalRecipe = recipe.copy(
+                title = tTitle,
+                instructions = tInstructions,
+                ingredients = tIngredients
+            )
+            onResult(finalRecipe)
         }
     }
 

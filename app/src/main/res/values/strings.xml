@@ -36,7 +36,7 @@
 
     <string name="added_to_favorites">added to favorites!</string>
     <string name="delete_recipe_title">Delete Recipe</string>
-    <string name="delete_recipe_message">Are you sure you want to delete \'%s\'?</string>
+    <string name="delete_recipe_message">Are you sure you want to delete?</string>
     <string name="yes_delete">Yes, Delete</string>
     <string name="cancel">Cancel</string>
     <string name="recipe_deleted">Recipe deleted</string>
@@ -45,7 +45,7 @@
     <string name="tvEmptyFavorites">No favorites yet</string>
 
     <string name="remove_favorite_title">Remove from Favorites</string>
-    <string name="remove_favorite_confirm_message">Are you sure you want to remove \'%s\' from favorites?</string>
+    <string name="remove_favorite_confirm_message">Are you sure you want to remove from favorites?</string>
     <string name="yes_remove">Yes, Remove</string>
 
     <string name="edit_recipe_title">Edit Recipe</string>

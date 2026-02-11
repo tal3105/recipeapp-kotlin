@@ -37,7 +37,7 @@
 
     <string name="added_to_favorites"> נוסף למועדפים!</string>
     <string name="delete_recipe_title">מחיקת מתכון</string>
-    <string name="delete_recipe_message">האם אתה בטוח שברצונך למחוק את \'%s\'?</string>
+    <string name="delete_recipe_message">האם אתה בטוח שברצונך למחוק?</string>
     <string name="yes_delete">כן, מחק</string>
     <string name="cancel">ביטול</string>
     <string name="recipe_deleted">המתכון נמחק</string>
@@ -46,7 +46,7 @@
     <string name="tvEmptyFavorites">אין עדיין מועדפים</string>
 
     <string name="remove_favorite_title">הסרה מהמועדפים</string>
-    <string name="remove_favorite_confirm_message">האם אתה בטוח שברצונך להסיר את \'%s\' מהמועדפים?</string>
+    <string name="remove_favorite_confirm_message">האם אתה בטוח שברצונך להסיר את מהמועדפים?</string>
     <string name="yes_remove">כן, הסר</string>
 
     <string name="edit_recipe_title">עריכת מתכון</string>
