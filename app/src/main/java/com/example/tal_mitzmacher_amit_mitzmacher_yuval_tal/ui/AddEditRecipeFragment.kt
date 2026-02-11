@@ -14,7 +14,9 @@ import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.R
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.data.Recipe
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.databinding.FragmentAddEditRecipeBinding
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.viewmodel.RecipeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddEditRecipeFragment : Fragment() {
 
     private var _binding: FragmentAddEditRecipeBinding? = null

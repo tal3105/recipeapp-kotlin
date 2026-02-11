@@ -11,7 +11,9 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.MainActivity
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LogInFragment : Fragment() {
 
     override fun onCreateView(

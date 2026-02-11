@@ -53,4 +53,24 @@ class RecipeRepository(application: Application) {
             emptyList()
         }
     }
+    suspend fun getRandomRecipe(): List<Recipe> {
+        return try {
+            val response = apiService.getRandomRecipe()
+
+            response.meals?.map { dto ->
+                Recipe(
+                    id = 0,
+                    title = dto.name ?: "",
+                    ingredients = dto.getFormattedIngredients() ?: "",
+                    instructions = dto.instructions ?: "",
+                    imgUri = dto.imageUrl,
+                    isFavorite = false,
+                    userId = ""
+                )
+            } ?: emptyList()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emptyList()
+        }
+    }
 }

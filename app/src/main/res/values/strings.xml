@@ -90,5 +90,7 @@
     <string name="ExitAppCancel">Cancel</string>
     <string name="ExitAppOut">Get Out</string>
 
+    <string name="randomBtn">Surprise Me!</string>
+
 
 </resources>

@@ -12,7 +12,9 @@ import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.R
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.data.Recipe
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.databinding.FragmentRecipeDetailBinding
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.viewmodel.RecipeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RecipeDetailFragment : Fragment() {
 
     private var _binding: FragmentRecipeDetailBinding? = null

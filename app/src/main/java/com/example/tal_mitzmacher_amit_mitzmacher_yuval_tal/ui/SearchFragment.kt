@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.R
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.databinding.FragmentSearchBinding
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.viewmodel.RecipeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
@@ -44,6 +46,12 @@ class SearchFragment : Fragment() {
                 // אפשר להשאיר ריק או להוסיף פעולה אחרת
             }
         )
+        binding.btnRandomRecipe.setOnClickListener {
+            binding.progressBar.visibility = View.VISIBLE
+            // ניקוי תוצאות קודמות כדי לראות שהחיפוש התחיל
+            adapter.submitList(emptyList())
+            viewModel.getRandomRecipe()
+        }
 
         binding.rvSearchResults.layoutManager = LinearLayoutManager(context)
         binding.rvSearchResults.adapter = adapter

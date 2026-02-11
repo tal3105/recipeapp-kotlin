@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("com.google.devtools.ksp") version "2.0.21-1.0.25"
     alias(libs.plugins.google.gms.google.services)
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -86,4 +87,7 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
     implementation("com.google.mlkit:translate:17.0.2")
+
+    implementation("com.google.dagger:hilt-android:2.54")
+    ksp("com.google.dagger:hilt-android-compiler:2.54")
 }

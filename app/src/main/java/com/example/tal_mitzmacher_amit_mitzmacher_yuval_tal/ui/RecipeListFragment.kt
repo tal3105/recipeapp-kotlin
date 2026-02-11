@@ -16,7 +16,9 @@ import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.data.Recipe
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.viewmodel.RecipeViewModel
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.databinding.FragmentRecipeListBinding
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RecipeListFragment : Fragment() {
 
     private var _binding: FragmentRecipeListBinding? = null

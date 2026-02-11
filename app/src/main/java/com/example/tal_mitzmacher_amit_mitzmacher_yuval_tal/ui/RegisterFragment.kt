@@ -11,7 +11,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.R
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.databinding.FragmentRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RegisterFragment : Fragment() {
 
     private var _binding: FragmentRegisterBinding? = null

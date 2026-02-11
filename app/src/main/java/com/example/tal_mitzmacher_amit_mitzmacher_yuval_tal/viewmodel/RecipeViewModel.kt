@@ -1,23 +1,26 @@
 package com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.data.Recipe
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.data.RecipeRepository
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.data.utils.TranslationAgent
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import java.util.Locale
+import javax.inject.Inject
 
-class RecipeViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class RecipeViewModel @Inject constructor(
+    private val repository: RecipeRepository,
+    private val translationAgent: TranslationAgent
+) : ViewModel() {
 
-    private val repository: RecipeRepository = RecipeRepository(application)
-    private val translationAgent = TranslationAgent()
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     private fun getUserId(): String = auth.currentUser?.uid ?: ""
@@ -29,13 +32,15 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     private val _searchResults = MutableLiveData<List<Recipe>>()
     val searchResults: LiveData<List<Recipe>> = _searchResults
 
-    // בדיקה האם המכשיר בעברית
+    private var lastApiResults: List<Recipe> = emptyList()
+
+    // Check if the device language is Hebrew
     private fun isDeviceInHebrew(): Boolean {
         val lang = Locale.getDefault().language
         return lang == "iw" || lang == "he"
     }
 
-    // פונקציית עזר: האם הטקסט מכיל עברית?
+    // Helper function: Does the text contain Hebrew?
     private fun containsHebrew(text: String): Boolean {
         for (char in text) {
             if (char in '\u0590'..'\u05FF') return true
@@ -43,15 +48,15 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         return false
     }
 
-    // --- תרגום רשימה (למסך הבית) ---
+    // --- Translate recipe list (for Home screen) ---
     fun translateRecipeList(list: List<Recipe>, onResult: (List<Recipe>) -> Unit) {
         viewModelScope.launch {
             val deviceIsHebrew = isDeviceInHebrew()
 
-            // שימוש ב-async לביצועים מהירים
+            // Use async for faster performance
             val translatedList = list.map { recipe ->
                 async {
-                    // מדלגים אם זה מתכון אישי (לא מה-API)
+                    // Skip if it is a personal recipe (not from API)
                     if (!recipe.isFromApi) {
                         return@async recipe
                     }
@@ -59,15 +64,15 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
                     val titleHasHebrew = containsHebrew(recipe.title)
 
                     if (deviceIsHebrew && !titleHasHebrew) {
-                        // מצב 1: טלפון בעברית, טקסט באנגלית -> תרגם לעברית
+                        // Case 1: Device is Hebrew, text is English -> translate to Hebrew
                         val tTitle = translationAgent.translateToHebrew(recipe.title)
                         recipe.copy(title = tTitle)
                     } else if (!deviceIsHebrew && titleHasHebrew) {
-                        // מצב 2: טלפון באנגלית, טקסט בעברית -> תרגם לאנגלית
+                        // Case 2: Device is English, text is Hebrew -> translate to English
                         val tTitle = translationAgent.translateToEnglish(recipe.title)
                         recipe.copy(title = tTitle)
                     } else {
-                        // אין צורך בתרגום (השפות תואמות)
+                        // No translation needed (languages match)
                         recipe
                     }
                 }
@@ -118,10 +123,10 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    // --- חיפוש מתכונים (נשאר ללא שינוי מהותי) ---
+    // --- Search recipes ---
     fun searchRecipes(query: String) {
         viewModelScope.launch {
-            // אם מחפשים בעברית, נתרגם את השאילתה לאנגלית עבור ה-API
+            // If searching in Hebrew, translate the query to English for the API
             val finalQuery = if (isDeviceInHebrew() && containsHebrew(query)) {
                 translationAgent.translateToEnglish(query)
             } else {
@@ -130,7 +135,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
 
             val results = repository.searchApiRecipes(finalQuery)
 
-            // מסמנים שהמתכונים הגיעו מה-API + מתרגמים כותרות לתצוגה אם צריך
+            // Mark recipes as from API and translate titles if needed
             val processedResults = results.map { recipe ->
                 var finalRecipe = recipe.copy(isFromApi = true)
 
@@ -144,7 +149,27 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    // --- פעולות DB ---
+    // --- מתכון אקראי ---
+    fun getRandomRecipe() {
+        viewModelScope.launch {
+            val results = repository.getRandomRecipe()
+
+            // 1. Save the pure ORIGINAL English results in memory
+            lastApiResults = results.map { it.copy(isFromApi = true) }
+
+            // 2. Translate only the copy we send to the UI
+            val processedResults = lastApiResults.map { recipe ->
+                if (isDeviceInHebrew()) {
+                    recipe.copy(title = translationAgent.translateToHebrew(recipe.title))
+                } else {
+                    recipe
+                }
+            }
+            _searchResults.postValue(processedResults)
+        }
+    }
+
+    // --- DB operations ---
     fun insert(recipe: Recipe) = viewModelScope.launch {
         repository.insert(recipe.copy(userId = getUserId()))
     }
