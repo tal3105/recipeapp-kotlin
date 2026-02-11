@@ -42,7 +42,7 @@ class RegisterFragment : Fragment() {
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 createNewUser(email, password)
             } else {
-                Toast.makeText(requireContext(), "נא למלא אימייל וסיסמה", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getText(R.string.FillEmailPass), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -60,16 +60,18 @@ class RegisterFragment : Fragment() {
                     Log.d(TAG, "createUserWithEmail:success")
                     val user = auth.currentUser
 
-                    Toast.makeText(requireContext(), "נרשמת בהצלחה!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getText(R.string.register_success), Toast.LENGTH_SHORT).show()
 
                     // מעבר למסך הבא (RecipeList)
                     findNavController().navigate(R.id.action_registerFragment_to_logInFragment)
                 } else {
                     // כישלון בהרשמה
                     Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                    val errorMessage = "${getString(R.string.errorRegister)}: ${task.exception?.message}"
+
                     Toast.makeText(
                         requireContext(),
-                        "שגיאה בתהליך ההרשמה: ${task.exception?.message}",
+                        errorMessage,
                         Toast.LENGTH_SHORT
                     ).show()
                 }

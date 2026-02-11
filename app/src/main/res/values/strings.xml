@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">My Recipes</string>
+    <string name="app_name">HomeChef</string>
 
     <string name="add_recipe">Add New Recipe</string>
     <string name="delete_title">Delete Recipe</string>
@@ -64,9 +64,11 @@
     <string name="login_button">Login</string>
     <string name="error_empty_fields">Please fill all fields</string>
     <string name="login_success">Logged in successfully!</string>
+    <string name="register_success">You Have Successfully Registered</string>
     <string name="login_go_to_register">Don\'t have an account? Register here</string>
     <string name="FillEmailPass">Fill Email and Password</string>
     <string name="error">Error</string>
+    <string name="errorRegister">Error During Registration Process</string>
 
 
 

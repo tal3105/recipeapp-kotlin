@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">אפליקציית מתכונים</string>
+    <string name="app_name">שף בבית</string>
 
     <string name="add_recipe">הוספת מתכון חדש</string>
     <string name="delete_title">מחיקת מתכון</string>
@@ -66,9 +66,11 @@
     <string name="login_button">התחברות</string>
     <string name="error_empty_fields">נא למלא את כל השדות</string>
     <string name="login_success">התחברת בהצלחה!</string>
+    <string name="register_success">נרשמת בהצלחה</string>
     <string name="login_go_to_register">עדיין אין לך חשבון? להרשמה לחץ כאן</string>
     <string name="FillEmailPass">נא למלא אימייל וסיסמה</string>
     <string name="error">שגיאה</string>
+    <string name="errorRegister">שגיאה בתהליך ההרשמה:</string>
 
 
     <string name="register_title">יצירת חשבון</string>
