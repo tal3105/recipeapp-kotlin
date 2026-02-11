@@ -29,13 +29,12 @@ class MainActivity : AppCompatActivity() {
         auth = Firebase.auth
     }
 
-    // הוספתי פרמטר onSuccess שמקבל פונקציית ניווט
     fun login(email: String, password: String, onSuccess: () -> Unit) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(this, getString(R.string.login), Toast.LENGTH_SHORT).show()
-                    onSuccess() // כאן אנחנו מפעילים את הניווט שיוגדר בפרגמנט
+                    onSuccess()
                 } else {
                     Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show()
                 }

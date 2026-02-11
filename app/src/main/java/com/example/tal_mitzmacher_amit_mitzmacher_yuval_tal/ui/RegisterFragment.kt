@@ -34,7 +34,6 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // הגדרת מאזין לכפתור ההרשמה
         binding.btnRegister.setOnClickListener {
             val email = binding.EmailReg.text.toString().trim()
             val password = binding.PasswordReg.text.toString().trim()
@@ -52,20 +51,16 @@ class RegisterFragment : Fragment() {
     }
 
     private fun createNewUser(email: String, password: String) {
-        // ב-Fragment משתמשים ב-requireActivity() במקום ב-this
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
-                    // הצלחה בהרשמה
                     Log.d(TAG, "createUserWithEmail:success")
                     val user = auth.currentUser
 
                     Toast.makeText(requireContext(), getText(R.string.register_success), Toast.LENGTH_SHORT).show()
 
-                    // מעבר למסך הבא (RecipeList)
                     findNavController().navigate(R.id.action_registerFragment_to_logInFragment)
                 } else {
-                    // כישלון בהרשמה
                     Log.w(TAG, "createUserWithEmail:failure", task.exception)
                     val errorMessage = "${getString(R.string.errorRegister)}: ${task.exception?.message}"
 

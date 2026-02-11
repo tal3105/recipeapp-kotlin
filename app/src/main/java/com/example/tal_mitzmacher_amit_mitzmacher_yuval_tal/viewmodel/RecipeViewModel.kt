@@ -48,12 +48,10 @@ class RecipeViewModel @Inject constructor(
         return false
     }
 
-    // --- Translate recipe list (for Home screen) ---
     fun translateRecipeList(list: List<Recipe>, onResult: (List<Recipe>) -> Unit) {
         viewModelScope.launch {
             val deviceIsHebrew = isDeviceInHebrew()
 
-            // Use async for faster performance
             val translatedList = list.map { recipe ->
                 async {
                     // Skip if it is a personal recipe (not from API)
@@ -82,7 +80,7 @@ class RecipeViewModel @Inject constructor(
         }
     }
 
-    // --- Translate a single recipe (for Details screen) ---
+    // Translate a single recipe (for Details screen) ---
     fun translateFullRecipe(recipe: Recipe, onResult: (Recipe) -> Unit) {
         viewModelScope.launch {
             // Skip if it is a personal recipe
@@ -123,7 +121,7 @@ class RecipeViewModel @Inject constructor(
         }
     }
 
-    // --- Search recipes ---
+
     fun searchRecipes(query: String) {
         viewModelScope.launch {
             // If searching in Hebrew, translate the query to English for the API
@@ -149,15 +147,14 @@ class RecipeViewModel @Inject constructor(
         }
     }
 
-    // --- מתכון אקראי ---
     fun getRandomRecipe() {
         viewModelScope.launch {
             val results = repository.getRandomRecipe()
 
-            // 1. Save the pure ORIGINAL English results in memory
+            // Save the pure ORIGINAL English results in memory
             lastApiResults = results.map { it.copy(isFromApi = true) }
 
-            // 2. Translate only the copy we send to the UI
+            // Translate only the copy we send to the UI
             val processedResults = lastApiResults.map { recipe ->
                 if (isDeviceInHebrew()) {
                     recipe.copy(title = translationAgent.translateToHebrew(recipe.title))
@@ -169,7 +166,6 @@ class RecipeViewModel @Inject constructor(
         }
     }
 
-    // --- DB operations ---
     fun insert(recipe: Recipe) = viewModelScope.launch {
         repository.insert(recipe.copy(userId = getUserId()))
     }

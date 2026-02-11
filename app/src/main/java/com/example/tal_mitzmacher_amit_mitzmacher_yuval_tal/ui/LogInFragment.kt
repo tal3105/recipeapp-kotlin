@@ -34,9 +34,7 @@ class LogInFragment : Fragment() {
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 val mainActivity = activity as? MainActivity
 
-                // אנחנו שולחים את האימייל, הסיסמה, ומה לעשות אם זה מצליח { }
                 mainActivity?.login(email, password) {
-                    // הניווט מתבצע כאן בתוך הפרגמנט - זה הכי בטוח
                     findNavController().navigate(R.id.action_logInFragment_to_recipeListFragment)
                 }
             } else {

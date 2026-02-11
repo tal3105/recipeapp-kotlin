@@ -20,7 +20,6 @@ class RecipeDetailFragment : Fragment() {
     private var _binding: FragmentRecipeDetailBinding? = null
     private val binding get() = _binding!!
 
-    // שימוש ב-ViewModel הרגיל (בלי Factory מסובך, כי בקובץ שלך ה-ViewModel מקבל רק Application)
     private val viewModel: RecipeViewModel by viewModels()
 
     override fun onCreateView(
@@ -34,17 +33,16 @@ class RecipeDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // קבלת ה-ID (מותאם לקוד שלך שעובד עם Bundle)
+        // Get the recipe ID that was passed from the previous screen
         val recipeId = arguments?.getInt("recipeId") ?: -1
 
         if (recipeId != -1) {
             viewModel.getRecipeById(recipeId).observe(viewLifecycleOwner) { originalRecipe ->
                 originalRecipe?.let { recipe ->
-                    updateUI(recipe) // מציג מיד את מה שיש (כנראה אנגלית)
+                    updateUI(recipe)
 
-                    // קריאה לתרגום (בהתאם לשפת המכשיר)
                     viewModel.translateFullRecipe(recipe) { finalRecipe ->
-                        // בדיקה שהמסך עדיין קיים לפני עדכון
+                        // Only update if the user is still looking at this screen
                         if (_binding != null && isAdded) {
                             updateUI(finalRecipe)
                         }

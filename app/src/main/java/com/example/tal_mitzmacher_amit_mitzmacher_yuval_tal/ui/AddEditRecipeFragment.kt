@@ -28,9 +28,9 @@ class AddEditRecipeFragment : Fragment() {
 
     private var isCurrentlyFavorite: Boolean = false
 
+    //opens the gallery so the user can pick a photo
     private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         uri?.let { tempUri ->
-            // כאן השינוי: אנחנו שומרים את התמונה לקובץ פנימי מיד לאחר הבחירה
             val savedUri = saveImageToInternalStorage(tempUri)
 
             savedUri?.let { permanentUri ->
@@ -48,7 +48,6 @@ class AddEditRecipeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // קבלת ה-ID של המתכון מה-Navigation (אם קיים)
         recipeId = arguments?.getInt("recipeId", -1) ?: -1
 
         if (recipeId != -1) {
@@ -83,13 +82,13 @@ class AddEditRecipeFragment : Fragment() {
         val ingredients = binding.editTextIngredients.text.toString().trim()
         val instructions = binding.editTextInstructions.text.toString().trim()
 
-        // בדיקה שכל השדות מלאים
+
         if (title.isEmpty() || ingredients.isEmpty() || instructions.isEmpty()) {
             Toast.makeText(requireContext(), getString(R.string.fill_all_fields), Toast.LENGTH_SHORT).show()
             return
         }
 
-        // יצירת אובייקט המתכון עם שדה ה-userId החדש
+
         val recipe = Recipe(
             id = if (recipeId == -1) 0 else recipeId,
             title = title,
@@ -97,7 +96,7 @@ class AddEditRecipeFragment : Fragment() {
             instructions = instructions,
             imgUri = selectedImageUri?.toString(),
             isFavorite = isCurrentlyFavorite,
-            userId = "" // ה-ViewModel ידאג להזריק כאן את ה-UID של המשתמש המחובר
+            userId = ""
         )
 
         if (recipeId == -1) {
@@ -108,15 +107,12 @@ class AddEditRecipeFragment : Fragment() {
             Toast.makeText(requireContext(), getString(R.string.recipe_updated), Toast.LENGTH_SHORT).show()
         }
 
-        // חזרה למסך הקודם
         findNavController().navigateUp()
     }
 
-    // פונקציה לשמירת התמונה בתיקייה הפרטית של האפליקציה
     private fun saveImageToInternalStorage(uri: Uri): Uri? {
         return try {
             val inputStream = requireContext().contentResolver.openInputStream(uri)
-            // יצירת שם קובץ ייחודי
             val fileName = "recipe_img_${System.currentTimeMillis()}.jpg"
             val file = java.io.File(requireContext().filesDir, fileName)
             val outputStream = java.io.FileOutputStream(file)
@@ -125,7 +121,6 @@ class AddEditRecipeFragment : Fragment() {
             inputStream?.close()
             outputStream.close()
 
-            // מחזיר את הנתיב החדש והקבוע של הקובץ
             Uri.fromFile(file)
         } catch (e: Exception) {
             e.printStackTrace()

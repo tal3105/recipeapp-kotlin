@@ -46,12 +46,11 @@ class RecipeAdapter(private val onItemClick: (Recipe) -> Unit,
 
             if (!recipe.imgUri.isNullOrEmpty()) {
                 com.bumptech.glide.Glide.with(itemView.context)
-                    .load(recipe.imgUri) // טוען URL או URI
-                    .placeholder(R.drawable.placeholder_food) // תמונה זמנית בזמן הטעינה
-                    .error(android.R.drawable.ic_menu_gallery) // תמונה למקרה של שגיאה
-                    .into(image) // מכניס לתוך המשתנה image שהגדרת למעלה
+                    .load(recipe.imgUri)
+                    .placeholder(R.drawable.placeholder_food)
+                    .error(android.R.drawable.ic_menu_gallery)
+                    .into(image)
             } else {
-                // אם אין תמונה בכלל, נציג ברירת מחדל
                 image.setImageResource(R.drawable.placeholder_food)
             }
         }

@@ -5,15 +5,15 @@ import retrofit2.http.Query
 
 interface RecipeApiService {
 
-    // בקשה 1: חיפוש מתכונים לפי שם (למשל: "Chicken")
+    // Request 1: Search for recipes by name
     @GET("search.php")
     suspend fun searchRecipes(@Query("s") query: String): MealResponse
 
-    // בקשה 2: קבלת פרטי מתכון לפי מזהה (ID)
+    // Request 2: Get all the info for a specific recipe using its ID.
     @GET("lookup.php")
     suspend fun getRecipeDetails(@Query("i") id: String): MealResponse
 
-    // בקשה 3: קבלת מתכון אקראי (למשל למסך הבית)
+    // Request 3: Get one random recipe from the server.
     @GET("random.php")
     suspend fun getRandomRecipe(): MealResponse
 }

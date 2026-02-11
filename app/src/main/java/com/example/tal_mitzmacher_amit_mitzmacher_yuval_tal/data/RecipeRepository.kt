@@ -29,15 +29,11 @@ class RecipeRepository(application: Application) {
     suspend fun updateFavoriteStatus(recipeId: Int, isFav: Boolean, userId: String) =
         recipeDao.updateFavoriteStatus(recipeId, isFav, userId)
 
-
-
-    // --- חיפוש ב-API - כאן הייתה השגיאה ---
     suspend fun searchApiRecipes(query: String): List<Recipe> {
         return try {
             val response = apiService.searchRecipes(query)
-
+            // Convert the DTO from the API to our local Recipe object
             response.meals?.map { dto ->
-                // חשוב: שולחים id = 0 כדי שה-Room ייצר ID אוטומטי כשנשמור את המתכון
                 Recipe(
                     id = 0,
                     title = dto.name ?: "",
@@ -45,7 +41,7 @@ class RecipeRepository(application: Application) {
                     instructions = dto.instructions ?: "",
                     imgUri = dto.imageUrl,
                     isFavorite = false,
-                    userId = "" // נשאר ריק עד לרגע השמירה ב-ViewModel
+                    userId = ""
                 )
             } ?: emptyList()
         } catch (e: Exception) {

@@ -47,16 +47,14 @@ class FavoriteFragment : Fragment() {
         // Observe the favorite recipes from the database
         viewModel.getFavoriteRecipes().observe(viewLifecycleOwner) { favorites ->
             if (favorites.isNullOrEmpty()) {
-                // Show empty state if there are no favorites
                 binding.tvEmptyFavorites.visibility = View.VISIBLE
                 binding.rvFavorites.visibility = View.GONE
                 adapter.submitList(emptyList())
             } else {
-                // Hide empty state and show RecyclerView
                 binding.tvEmptyFavorites.visibility = View.GONE
                 binding.rvFavorites.visibility = View.VISIBLE
 
-                // Show original list immediately for a snappy UI
+                // Show original list immediately
                 adapter.submitList(favorites)
 
                 // Translate the list titles automatically based on device language

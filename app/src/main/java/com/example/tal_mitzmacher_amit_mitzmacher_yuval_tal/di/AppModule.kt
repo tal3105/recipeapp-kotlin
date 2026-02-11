@@ -9,16 +9,20 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+//Hilt Module.
+//tells Hilt how to create the objects we need
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    //tells Hilt how to provide the TranslationAgent
     @Provides
     @Singleton
     fun provideTranslationAgent(): TranslationAgent {
         return TranslationAgent()
     }
 
+    //provides the Repository
     @Provides
     @Singleton
     fun provideRecipeRepository(app: Application): RecipeRepository {

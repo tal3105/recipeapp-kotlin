@@ -52,7 +52,6 @@ class RecipeListFragment : Fragment() {
             }
         })
 
-        // 1. הגדרת האדפטר (Adapter)
         val adapter = RecipeAdapter(
             onItemClick = { recipe ->
                 val bundle = Bundle().apply { putInt("recipeId", recipe.id) }
@@ -61,13 +60,11 @@ class RecipeListFragment : Fragment() {
             onItemLongClick = { recipe -> showDeleteConfirmation(recipe) }
         )
 
-        // 2. הגדרת ה-RecyclerView
         binding.recyclerView.apply {
             this.adapter = adapter
             layoutManager = LinearLayoutManager(requireContext())
         }
 
-        // 3. הגדרת כפתורי הניווט (FABs)
         binding.btnGoToFavorites.setOnClickListener {
             findNavController().navigate(R.id.action_recipeListFragment_to_favoriteFragment)
         }
@@ -80,15 +77,13 @@ class RecipeListFragment : Fragment() {
             findNavController().navigate(R.id.action_recipeListFragment_to_addEditRecipeFragment)
         }
 
-        // 4. כפתור התנתקות (Log Out)
         binding.btnLogout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             Toast.makeText(context, getString(R.string.logOut), Toast.LENGTH_SHORT).show()
-            // חזרה למסך הלוגין וניקוי ה-Stack כדי שהמשתמש לא יוכל לחזור אחורה
             findNavController().navigate(R.id.action_recipeListFragment_to_logInFragment)
         }
 
-        // 5. Swipe לימין להוספה למועדפים
+        //Swipe
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
             override fun onMove(rv: RecyclerView, vh: RecyclerView.ViewHolder, t: RecyclerView.ViewHolder): Boolean = false
 
@@ -99,18 +94,15 @@ class RecipeListFragment : Fragment() {
                     viewModel.updateFavoriteStatus(recipe.id, true)
                     Toast.makeText(context, getString(R.string.added_to_favorites), Toast.LENGTH_SHORT).show()
                 }
-                adapter.notifyItemChanged(position) // מחזיר את הפריט למקומו באנימציה
+                adapter.notifyItemChanged(position) //Returns the item to its place in the animation
             }
         }
         ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(binding.recyclerView)
 
-        // 6. תצפית (Observation) על רשימת המתכונים - החלק ששונה!
         viewModel.getAllRecipes().observe(viewLifecycleOwner) { recipes ->
-            // קריאה לפונקציית התרגום ב-ViewModel לפני שמעבירים לאדפטר
             viewModel.translateRecipeList(recipes) { translatedRecipes ->
                 adapter.submitList(translatedRecipes)
 
-                // ניהול מצב רשימה ריקה (Empty State)
                 if (translatedRecipes.isNullOrEmpty()) {
                     binding.tvEmptyState.visibility = View.VISIBLE
                     binding.recyclerView.visibility = View.GONE

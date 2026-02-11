@@ -11,20 +11,21 @@ import androidx.room.Update
 @Dao
 interface RecipeDao {
 
-    // מביא את כל המתכונים של משתמש ספציפי
+    //Get all recipes for a specific user
     @Query("SELECT * FROM recipes_table WHERE userId = :userId")
     fun getAllRecipes(userId: String): LiveData<List<Recipe>>
 
-    // מוודא שהמתכון שייך למשתמש לפני שהוא שולף אותו לפי ID
+    // Find a specific recipe by its ID
     @Query("SELECT * FROM recipes_table WHERE id = :id AND userId = :userId")
     fun getRecipeById(id: Int, userId: String): LiveData<Recipe>
 
 
 
-    // מביא רק את המועדפים של המשתמש המחובר
+    // Get only the recipes that the user marked as favorites
     @Query("SELECT * FROM recipes_table WHERE isFavorite = 1 AND userId = :userId")
     fun getFavoriteRecipes(userId: String): LiveData<List<Recipe>>
 
+    // toggle the favorite heart button
     @Query("UPDATE recipes_table SET isFavorite = :isFav WHERE id = :recipeId AND userId = :userId")
     suspend fun updateFavoriteStatus(recipeId: Int, isFav: Boolean, userId: String)
 

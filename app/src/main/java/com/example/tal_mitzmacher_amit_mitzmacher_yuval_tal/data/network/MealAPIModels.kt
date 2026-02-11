@@ -7,6 +7,7 @@ data class MealResponse(
     val meals: List<MealDto>?
 )
 
+// This DTO represents a single meal from API.
 data class MealDto(
     @SerializedName("idMeal") val id: String,
     @SerializedName("strMeal") val name: String,
@@ -14,9 +15,8 @@ data class MealDto(
     @SerializedName("strArea") val area: String,
     @SerializedName("strInstructions") val instructions: String,
     @SerializedName("strMealThumb") val imageUrl: String,
-    @SerializedName("strYoutube") val youtubeUrl: String?,
 
-    // --- הוספת שדות המצרכים והכמויות (עד 20) ---
+    // The API gives ingredients and measures as separate fields (up to 20).
     val strIngredient1: String?, val strIngredient2: String?, val strIngredient3: String?,
     val strIngredient4: String?, val strIngredient5: String?, val strIngredient6: String?,
     val strIngredient7: String?, val strIngredient8: String?, val strIngredient9: String?,
@@ -33,11 +33,11 @@ data class MealDto(
     val strMeasure16: String?, val strMeasure17: String?, val strMeasure18: String?,
     val strMeasure19: String?, val strMeasure20: String?
 ) {
-    // פונקציה עזר שמאחדת את המצרכים והכמויות לרשימה אחת
+    // Helper function to combine ingredients and measurements into one string.
     fun getFormattedIngredients(): String {
         val ingredientsList = mutableListOf<String>()
 
-        // רשימה של כל זוגות (מצרך, כמות)
+        // Put all pairs together in a list
         val pairs = listOf(
             strIngredient1 to strMeasure1, strIngredient2 to strMeasure2,
             strIngredient3 to strMeasure3, strIngredient4 to strMeasure4,
@@ -52,14 +52,14 @@ data class MealDto(
         )
 
         for ((ingredient, measure) in pairs) {
-            // אם המצרך לא ריק, הוסף אותו לרשימה
+            // Only add if the ingredient is not null or empty
             if (!ingredient.isNullOrBlank()) {
                 val qty = if (!measure.isNullOrBlank()) " - $measure" else ""
                 ingredientsList.add("$ingredient$qty")
             }
         }
 
-        // מחזיר מחרוזת עם ירידת שורה בין כל מצרך
+        // Join everything
         return ingredientsList.joinToString("\n")
     }
 }

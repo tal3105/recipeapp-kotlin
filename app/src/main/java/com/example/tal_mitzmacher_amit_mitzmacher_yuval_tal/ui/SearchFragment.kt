@@ -20,8 +20,7 @@ class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
 
-    // שימוש באותו ViewModel של כל האפליקציה
-    private val viewModel: RecipeViewModel by viewModels() // או activityViewModels() אם את רוצה לשתף מידע
+    private val viewModel: RecipeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,21 +33,18 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // הגדרת האדפטר (משתמשים באותו אדפטר כמו במסך הראשי!)
         val adapter = RecipeAdapter(
             onItemClick = { recipe ->
-                // בלחיצה על תוצאה מהאינטרנט -> נשמור אותה לדאטהבייס המקומי
                 viewModel.insert(recipe)
                 val message = context?.getString(R.string.added_to_home, recipe.title)
                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
             },
             onItemLongClick = {
-                // אפשר להשאיר ריק או להוסיף פעולה אחרת
             }
         )
         binding.btnRandomRecipe.setOnClickListener {
             binding.progressBar.visibility = View.VISIBLE
-            // ניקוי תוצאות קודמות כדי לראות שהחיפוש התחיל
+            //clean the previous search
             adapter.submitList(emptyList())
             viewModel.getRandomRecipe()
         }
@@ -56,7 +52,6 @@ class SearchFragment : Fragment() {
         binding.rvSearchResults.layoutManager = LinearLayoutManager(context)
         binding.rvSearchResults.adapter = adapter
 
-        // האזנה לתוצאות החיפוש מה-ViewModel
         viewModel.searchResults.observe(viewLifecycleOwner) { recipes ->
             binding.progressBar.visibility = View.GONE
             if (recipes != null) {
@@ -64,18 +59,18 @@ class SearchFragment : Fragment() {
             }
         }
 
-        // הגדרת שורת החיפוש
+        //Setting the search bar
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!query.isNullOrEmpty()) {
                     binding.progressBar.visibility = View.VISIBLE
-                    viewModel.searchRecipes(query) // שליחת הבקשה ל-API
+                    viewModel.searchRecipes(query) // sent the request to the API
                 }
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                return false // לא מחפשים על כל אות, רק ב-Submit
+                return false // Don't search for every letter, just after submit
             }
         })
     }
