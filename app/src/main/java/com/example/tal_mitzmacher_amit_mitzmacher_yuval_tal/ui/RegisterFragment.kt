@@ -56,29 +56,6 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun createNewUser(email: String, password: String) {
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(requireActivity()) { task ->
-                if (task.isSuccessful) {
-                    Log.d(TAG, "createUserWithEmail:success")
-                    val user = auth.currentUser
-
-                    Toast.makeText(requireContext(), getText(R.string.register_success), Toast.LENGTH_SHORT).show()
-
-                    findNavController().navigate(R.id.action_registerFragment_to_logInFragment)
-                } else {
-                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                    val errorMessage = "${getString(R.string.errorRegister)}: ${task.exception?.message}"
-
-                    Toast.makeText(
-                        requireContext(),
-                        errorMessage,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
