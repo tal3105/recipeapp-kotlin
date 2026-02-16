@@ -1,11 +1,15 @@
 package com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -37,6 +41,19 @@ class MainActivity : AppCompatActivity() {
                     onSuccess()
                 } else {
                     Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+    public fun createNewUser(email: String, password: String, onSuccess: () -> Unit) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    Toast.makeText(this, getText(R.string.register_success), Toast.LENGTH_SHORT).show()
+                    onSuccess()
+                } else {
+                    val errorMessage = "${getString(R.string.errorRegister)}: ${task.exception?.message}"
+                    Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
                 }
             }
     }

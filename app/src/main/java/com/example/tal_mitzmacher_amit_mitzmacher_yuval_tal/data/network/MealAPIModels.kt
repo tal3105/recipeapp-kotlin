@@ -12,7 +12,6 @@ data class MealDto(
     @SerializedName("idMeal") val id: String,
     @SerializedName("strMeal") val name: String,
     @SerializedName("strCategory") val category: String,
-    @SerializedName("strArea") val area: String,
     @SerializedName("strInstructions") val instructions: String,
     @SerializedName("strMealThumb") val imageUrl: String,
 

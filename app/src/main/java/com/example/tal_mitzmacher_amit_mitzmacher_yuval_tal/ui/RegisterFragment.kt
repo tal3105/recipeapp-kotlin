@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.MainActivity
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.R
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.databinding.FragmentRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -39,7 +40,12 @@ class RegisterFragment : Fragment() {
             val password = binding.PasswordReg.text.toString().trim()
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
-                createNewUser(email, password)
+                val mainActivity = activity as? MainActivity
+                mainActivity?.createNewUser(email, password){
+                    findNavController().navigate(R.id.action_registerFragment_to_logInFragment)
+                }
+
+
             } else {
                 Toast.makeText(requireContext(), getText(R.string.FillEmailPass), Toast.LENGTH_SHORT).show()
             }
