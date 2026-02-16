@@ -1,6 +1,5 @@
 package com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.ui
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.R
 import com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.data.Recipe
-import dagger.hilt.android.AndroidEntryPoint
 
 class RecipeAdapter(private val onItemClick: (Recipe) -> Unit,
                     private val onItemLongClick: (Recipe) -> Unit ) :

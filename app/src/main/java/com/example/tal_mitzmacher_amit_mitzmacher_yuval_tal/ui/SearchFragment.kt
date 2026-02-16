@@ -36,7 +36,7 @@ class SearchFragment : Fragment() {
         val adapter = RecipeAdapter(
             onItemClick = { recipe ->
                 viewModel.insert(recipe)
-                val message = context?.getString(R.string.added_to_home, recipe.title)
+                val message = context?.getString(R.string.added_to_home)
                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
             },
             onItemLongClick = {
