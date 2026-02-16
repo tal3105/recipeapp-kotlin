@@ -1,7 +1,6 @@
 package com.example.tal_mitzmacher_amit_mitzmacher_yuval_tal.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +43,6 @@ class RegisterFragment : Fragment() {
                 mainActivity?.createNewUser(email, password){
                     findNavController().navigate(R.id.action_registerFragment_to_logInFragment)
                 }
-
 
             } else {
                 Toast.makeText(requireContext(), getText(R.string.FillEmailPass), Toast.LENGTH_SHORT).show()
